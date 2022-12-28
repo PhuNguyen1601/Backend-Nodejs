@@ -1,0 +1,28 @@
+INSERT INTO ALLCODES (`type`,`key`,`valueEn`,`valueVi`, `createdAt`,`updatedAt`) values ('ROLE','R1','Admin', 'Quản trị viên',STR_TO_DATE('01-01-2000 01:00:00', '%m-%d-%Y %H:%i:%s'),STR_TO_DATE('01-01-2000 01:00:00', '%m-%d-%Y %H:%i:%s') ); 
+INSERT INTO ALLCODES (`type`,`key`,`valueEn`,`valueVi`, `createdAt`,`updatedAt`) values ('ROLE','R2','Doctor', 'Bác sĩ' ,STR_TO_DATE('01-01-2000 01:00:00', '%m-%d-%Y %H:%i:%s'),STR_TO_DATE('01-01-2000 01:00:00', '%m-%d-%Y %H:%i:%s')); 
+INSERT INTO ALLCODES (`type`,`key`,`valueEn`,`valueVi`, `createdAt`,`updatedAt`) values ('ROLE','R3','Patient', 'Bệnh nhân' ,STR_TO_DATE('01-01-2000 01:00:00', '%m-%d-%Y %H:%i:%s'),STR_TO_DATE('01-01-2000 01:00:00', '%m-%d-%Y %H:%i:%s')); 
+
+INSERT INTO ALLCODES (`type`,`key`,`valueEn`,`valueVi`, `createdAt`,`updatedAt`) values ('STATUS','S1','New', 'Lịch hẹn mới',STR_TO_DATE('01-01-2000 01:00:00', '%m-%d-%Y %H:%i:%s'),STR_TO_DATE('01-01-2000 01:00:00', '%m-%d-%Y %H:%i:%s') ); 
+INSERT INTO ALLCODES (`type`,`key`,`valueEn`,`valueVi`, `createdAt`,`updatedAt`) values ('STATUS','S2','Confirmed', 'Đã xác nhận',STR_TO_DATE('01-01-2000 01:00:00', '%m-%d-%Y %H:%i:%s'),STR_TO_DATE('01-01-2000 01:00:00', '%m-%d-%Y %H:%i:%s') ); 
+INSERT INTO ALLCODES (`type`,`key`,`valueEn`,`valueVi`, `createdAt`,`updatedAt`) values ('STATUS','S3','Done', 'Đã khám xong',STR_TO_DATE('01-01-2000 01:00:00', '%m-%d-%Y %H:%i:%s'),STR_TO_DATE('01-01-2000 01:00:00', '%m-%d-%Y %H:%i:%s') ); 
+INSERT INTO ALLCODES (`type`,`key`,`valueEn`,`valueVi`, `createdAt`,`updatedAt`) values ('STATUS','S4','Cancel', 'Đã hủy',STR_TO_DATE('01-01-2000 01:00:00', '%m-%d-%Y %H:%i:%s'),STR_TO_DATE('01-01-2000 01:00:00', '%m-%d-%Y %H:%i:%s') ); 
+
+INSERT INTO ALLCODES (`type`,`key`,`valueEn`,`valueVi`, `createdAt`,`updatedAt`) values ('TIME','T1','8:00 AM - 9:00 AM', '8:00 - 9:00',STR_TO_DATE('01-01-2000 01:00:00', '%m-%d-%Y %H:%i:%s'),STR_TO_DATE('01-01-2000 01:00:00', '%m-%d-%Y %H:%i:%s') ); 
+INSERT INTO ALLCODES (`type`,`key`,`valueEn`,`valueVi`, `createdAt`,`updatedAt`) values ('TIME','T2','9:00 AM - 10:00 AM', '9:00 - 10:00',STR_TO_DATE('01-01-2000 01:00:00', '%m-%d-%Y %H:%i:%s'),STR_TO_DATE('01-01-2000 01:00:00', '%m-%d-%Y %H:%i:%s') ); 
+INSERT INTO ALLCODES (`type`,`key`,`valueEn`,`valueVi`, `createdAt`,`updatedAt`) values ('TIME','T3','10:00 AM - 11:00 AM', '10:00 - 11:00',STR_TO_DATE('01-01-2000 01:00:00', '%m-%d-%Y %H:%i:%s'),STR_TO_DATE('01-01-2000 01:00:00', '%m-%d-%Y %H:%i:%s') ); 
+INSERT INTO ALLCODES (`type`,`key`,`valueEn`,`valueVi`, `createdAt`,`updatedAt`) values ('TIME','T4','11:00 AM - 0:00 PM', '11:00 - 12:00',STR_TO_DATE('01-01-2000 01:00:00', '%m-%d-%Y %H:%i:%s'),STR_TO_DATE('01-01-2000 01:00:00', '%m-%d-%Y %H:%i:%s') ); 
+
+INSERT INTO ALLCODES (`type`,`key`,`valueEn`,`valueVi`, `createdAt`,`updatedAt`) values ('TIME','T5','1:00 PM - 2:00 PM', '13:00 - 14:00',STR_TO_DATE('01-01-2000 01:00:00', '%m-%d-%Y %H:%i:%s'),STR_TO_DATE('01-01-2000 01:00:00', '%m-%d-%Y %H:%i:%s') ); 
+INSERT INTO ALLCODES (`type`,`key`,`valueEn`,`valueVi`, `createdAt`,`updatedAt`) values ('TIME','T6','2:00 PM - 3:00 PM', '14:00 - 15:00',STR_TO_DATE('01-01-2000 01:00:00', '%m-%d-%Y %H:%i:%s'),STR_TO_DATE('01-01-2000 01:00:00', '%m-%d-%Y %H:%i:%s') ); 
+INSERT INTO ALLCODES (`type`,`key`,`valueEn`,`valueVi`, `createdAt`,`updatedAt`) values ('TIME','T7','3:00 PM - 4:00 PM', '15:00 - 16:00',STR_TO_DATE('01-01-2000 01:00:00', '%m-%d-%Y %H:%i:%s'),STR_TO_DATE('01-01-2000 01:00:00', '%m-%d-%Y %H:%i:%s') ); 
+INSERT INTO ALLCODES (`type`,`key`,`valueEn`,`valueVi`, `createdAt`,`updatedAt`) values ('TIME','T8','4:00 PM - 5:00 PM', '16:00 - 17:00' ,STR_TO_DATE('01-01-2000 01:00:00', '%m-%d-%Y %H:%i:%s'),STR_TO_DATE('01-01-2000 01:00:00', '%m-%d-%Y %H:%i:%s')); 
+
+INSERT INTO ALLCODES (`type`,`key`,`valueEn`,`valueVi`, `createdAt`,`updatedAt`) values ('POSITION','P0','None', 'Bác sĩ',STR_TO_DATE('01-01-2000 01:00:00', '%m-%d-%Y %H:%i:%s'),STR_TO_DATE('01-01-2000 01:00:00', '%m-%d-%Y %H:%i:%s') ); 
+INSERT INTO ALLCODES (`type`,`key`,`valueEn`,`valueVi`, `createdAt`,`updatedAt`) values ('POSITION','P1','Master', 'Thạc sĩ',STR_TO_DATE('01-01-2000 01:00:00', '%m-%d-%Y %H:%i:%s'),STR_TO_DATE('01-01-2000 01:00:00', '%m-%d-%Y %H:%i:%s') ); 
+INSERT INTO ALLCODES (`type`,`key`,`valueEn`,`valueVi`, `createdAt`,`updatedAt`) values ('POSITION','P2','Doctor', 'Tiến sĩ' ,STR_TO_DATE('01-01-2000 01:00:00', '%m-%d-%Y %H:%i:%s'),STR_TO_DATE('01-01-2000 01:00:00', '%m-%d-%Y %H:%i:%s')); 
+INSERT INTO ALLCODES (`type`,`key`,`valueEn`,`valueVi`, `createdAt`,`updatedAt`) values ('POSITION','P3','Associate Professor', 'Phó giáo sư',STR_TO_DATE('01-01-2000 01:00:00', '%m-%d-%Y %H:%i:%s'),STR_TO_DATE('01-01-2000 01:00:00', '%m-%d-%Y %H:%i:%s') ); 
+INSERT INTO ALLCODES (`type`,`key`,`valueEn`,`valueVi`, `createdAt`,`updatedAt`) values ('POSITION','P4','Professor', 'Giáo sư' ,STR_TO_DATE('01-01-2000 01:00:00', '%m-%d-%Y %H:%i:%s'),STR_TO_DATE('01-01-2000 01:00:00', '%m-%d-%Y %H:%i:%s')); 
+
+INSERT INTO ALLCODES (`type`,`key`,`valueEn`,`valueVi`, `createdAt`,`updatedAt`) values ('GENDER','M','Male', 'Nam' ,STR_TO_DATE('01-01-2000 01:00:00', '%m-%d-%Y %H:%i:%s'),STR_TO_DATE('01-01-2000 01:00:00', '%m-%d-%Y %H:%i:%s')); 
+INSERT INTO ALLCODES (`type`,`key`,`valueEn`,`valueVi`, `createdAt`,`updatedAt`) values ('GENDER','F','Female', 'Nữ' ,STR_TO_DATE('01-01-2000 01:00:00', '%m-%d-%Y %H:%i:%s'),STR_TO_DATE('01-01-2000 01:00:00', '%m-%d-%Y %H:%i:%s')); 
+INSERT INTO ALLCODES (`type`,`key`,`valueEn`,`valueVi`, `createdAt`,`updatedAt`) values ('GENDER','O','Other', 'Khác' ,STR_TO_DATE('01-01-2000 01:00:00', '%m-%d-%Y %H:%i:%s'),STR_TO_DATE('01-01-2000 01:00:00', '%m-%d-%Y %H:%i:%s')); 
