@@ -128,9 +128,39 @@ let getDetailDoctorById = (inputId) => {
     }
   });
 };
+
+let getMarkdownDoctorById = (inputId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!inputId) {
+        resolve({
+          errCode: 1,
+          errMessage: "Missing required parameter!",
+        });
+      } else {
+        let data = await db.Markdown.findOne({
+          where: {
+            doctorId: inputId,
+          },
+
+          raw: false,
+        });
+        if (!data) data = false;
+        resolve({
+          errCode: 0,
+          data: data,
+        });
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
 module.exports = {
   getTopDoctorHome: getTopDoctorHome,
   getAllDoctors: getAllDoctors,
   saveDetailInfoDoctor: saveDetailInfoDoctor,
   getDetailDoctorById: getDetailDoctorById,
+  getMarkdownDoctorById: getMarkdownDoctorById,
 };

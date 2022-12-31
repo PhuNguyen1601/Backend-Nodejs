@@ -23,6 +23,10 @@ let initWebRoutes = (app) => {
   router.get("/api/get-all-doctors", doctorController.getAllDoctors);
   router.post("/api/save-info-doctor", doctorController.postInfoDoctor);
   router.get(
+    "/api/get-markdown-doctor",
+    doctorController.getMarkdownDoctorById
+  );
+  router.get(
     "/api/get-detail-doctor-by-id",
     doctorController.getDetailDoctorById
   );
