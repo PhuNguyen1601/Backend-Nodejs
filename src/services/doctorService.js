@@ -1,6 +1,6 @@
 import db from "../models/index";
 require("dotenv").config();
-import _ from "lodash";
+import _, { reject } from "lodash";
 
 const MAX_NUMBER_SCHEDULE = process.env.MAX_NUMBER_SCHEDULE;
 
@@ -65,13 +65,19 @@ let saveDetailInfoDoctor = (inputData) => {
         !inputData.doctorId ||
         !inputData.contentHTML ||
         !inputData.contentMarkdown ||
-        !inputData.action
+        !inputData.action ||
+        !inputData.selectedPrice ||
+        !inputData.selectedPayment ||
+        !inputData.selectedProvince ||
+        !inputData.nameClinic ||
+        !inputData.addressClinic
       ) {
         resolve({
           errCode: 1,
           errMessage: "Missing required parameters!",
         });
       } else {
+        //upsert markdown
         if (inputData.action === "CREATE") {
           await db.Markdown.create({
             contentHTML: inputData.contentHTML,
@@ -90,6 +96,38 @@ let saveDetailInfoDoctor = (inputData) => {
             doctorMarkdown.description = inputData.description;
             await doctorMarkdown.save();
           }
+        }
+
+        //upsert doctor info
+        let doctorInfo = await db.Doctor_Info.findOne({
+          where: {
+            doctorId: inputData.doctorId,
+          },
+          raw: false,
+        });
+        if (doctorInfo) {
+          //update
+          doctorInfo.doctorId = inputData.doctorId;
+          doctorInfo.priceId = inputData.selectedPrice;
+          doctorInfo.provinceId = inputData.selectedProvince;
+          doctorInfo.paymentId = inputData.selectedPayment;
+          doctorInfo.nameClinic = inputData.nameClinic;
+          doctorInfo.addressClinic = inputData.addressClinic;
+          doctorInfo.paymentId = inputData.selectedPayment;
+          doctorInfo.note = inputData.note;
+          await doctorInfo.save();
+        } else {
+          //create
+          await db.Doctor_Info.create({
+            doctorId: inputData.doctorId,
+            priceId: inputData.selectedPrice,
+            provinceId: inputData.selectedProvince,
+            paymentId: inputData.selectedPayment,
+            nameClinic: inputData.nameClinic,
+            addressClinic: inputData.addressClinic,
+            paymentId: inputData.selectedPayment,
+            note: inputData.note,
+          });
         }
         resolve({
           errCode: 0,
@@ -128,42 +166,37 @@ let getDetailDoctorById = (inputId) => {
               as: "positionData",
               attributes: ["valueEn", "valueVi"],
             },
+            {
+              model: db.Doctor_Info,
+              attributes: {
+                exclude: ["id", "doctorId"],
+              },
+              include: [
+                {
+                  model: db.Allcode,
+                  as: "priceData",
+                  attributes: ["valueEn", "valueVi"],
+                },
+                {
+                  model: db.Allcode,
+                  as: "provinceData",
+                  attributes: ["valueEn", "valueVi"],
+                },
+                {
+                  model: db.Allcode,
+                  as: "paymentData",
+                  attributes: ["valueEn", "valueVi"],
+                },
+              ],
+            },
           ],
-          // raw: false,
           nest: true,
         });
         if (data && data.image) {
           data.image = Buffer.from(data.image, "base64").toString("binary");
         }
         if (!data) data = {};
-        resolve({
-          errCode: 0,
-          data: data,
-        });
-      }
-    } catch (e) {
-      reject(e);
-    }
-  });
-};
 
-let getMarkdownDoctorById = (inputId) => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      if (!inputId) {
-        resolve({
-          errCode: 1,
-          errMessage: "Missing required parameter!",
-        });
-      } else {
-        let data = await db.Markdown.findOne({
-          where: {
-            doctorId: inputId,
-          },
-
-          raw: false,
-        });
-        if (!data) data = false;
         resolve({
           errCode: 0,
           data: data,
@@ -188,29 +221,22 @@ let bulkCreateSchedule = (data) => {
         if (schedule && schedule.length > 0) {
           schedule = schedule.map((item) => {
             item.maxNumber = MAX_NUMBER_SCHEDULE;
+            item.date = item.date.toString();
             return item;
           });
         }
         let existing = await db.Schedule.findAll({
           where: { doctorId: data.doctorId, date: data.date },
-
           attributes: ["timeType", "date", "doctorId", "maxNumber"],
           raw: true,
         });
-        if (existing && existing.length > 0) {
-          existing = existing.map((item) => {
-            item.date = new Date(item.date).getTime();
-            return item;
-          });
-        }
-        let toCreate = _.differenceWith(schedule, existing, (a, b) => {
-          return a.timeType === b.timeType && a.date === b.date;
-        });
 
+        let toCreate = _.differenceWith(schedule, existing, (a, b) => {
+          return a.timeType === b.timeType && a.date === b.date.toString();
+        });
         if (toCreate && toCreate.length > 0) {
           await db.Schedule.bulkCreate(toCreate);
         }
-
         resolve({
           errCode: 0,
           errMessage: "Save schedule doctor succeed!",
@@ -221,12 +247,92 @@ let bulkCreateSchedule = (data) => {
     }
   });
 };
+let getScheduleByDate = (doctorId, date) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!doctorId || !date) {
+        resolve({
+          errCode: 1,
+          errMessage: "Missing required parameter!",
+        });
+      } else {
+        let data = await db.Schedule.findAll({
+          where: { doctorId: doctorId, date: date },
+          include: [
+            {
+              model: db.Allcode,
+              as: "timeTypeData",
+              attributes: ["valueEn", "valueVi"],
+            },
+          ],
+          raw: false,
+          nest: true,
+        });
+        if (!data) data = [];
+        resolve({
+          errCode: 0,
+          data: data,
+        });
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
 
+let getExtraInfoDoctorById = (doctorId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!doctorId) {
+        resolve({
+          errCode: 1,
+          errMessage: "Missing required parameter!",
+        });
+      } else {
+        let data = await db.Doctor_Info.findOne({
+          where: {
+            doctorId: doctorId,
+          },
+          attributes: {
+            exclude: ["id", "doctorId"],
+          },
+          include: [
+            {
+              model: db.Allcode,
+              as: "priceData",
+              attributes: ["valueEn", "valueVi"],
+            },
+            {
+              model: db.Allcode,
+              as: "provinceData",
+              attributes: ["valueEn", "valueVi"],
+            },
+            {
+              model: db.Allcode,
+              as: "paymentData",
+              attributes: ["valueEn", "valueVi"],
+            },
+          ],
+          raw: false,
+          nest: true,
+        });
+        if (!data) data = {};
+        resolve({
+          errCode: 0,
+          data: data,
+        });
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
 module.exports = {
-  getTopDoctorHome: getTopDoctorHome,
-  getAllDoctors: getAllDoctors,
-  saveDetailInfoDoctor: saveDetailInfoDoctor,
-  getDetailDoctorById: getDetailDoctorById,
-  getMarkdownDoctorById: getMarkdownDoctorById,
-  bulkCreateSchedule: bulkCreateSchedule,
+  getTopDoctorHome,
+  getAllDoctors,
+  saveDetailInfoDoctor,
+  getDetailDoctorById,
+  bulkCreateSchedule,
+  getScheduleByDate,
+  getExtraInfoDoctorById,
 };
